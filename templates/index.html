@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Comment Fetcher</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <i class="fab fa-youtube"></i>
+                <h1>YouTube Comment Explorer</h1>
+                <p>Discover and explore YouTube comments with style</p>
+            </div>
+            <nav class="nav-links">
+                <a href="/" class="nav-link active"><i class="fas fa-search"></i> Search Videos</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="search-section">
+                <div class="search-card">
+                    <h2><i class="fas fa-search"></i> AI-Powered Search</h2>
+                    <div class="search-form">
+                        <div class="search-input-group">
+                            <input type="text" id="searchInput" placeholder="Enter your search query..." class="search-input">
+                        </div>
+                        
+                        <!-- New configuration inputs -->
+                        <div class="search-config">
+                            <div class="config-row">
+                                <div class="config-item">
+                                    <label for="queryCount">Number of Query Variations:</label>
+                                    <input type="number" id="queryCount" min="1" max="50" value="20" class="config-input">
+                                </div>
+                                <div class="config-item">
+                                    <label for="targetComments">Target Comments:</label>
+                                    <input type="number" id="targetComments" min="1000" max="100000" value="50000" step="1000" class="config-input">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="searchBtn" class="search-btn">
+                            <i class="fas fa-robot"></i>
+                            AI Search YouTube & Reddit
+                        </button>
+                    </div>
+                    <div class="search-info">
+                        <p><i class="fas fa-clock"></i> <strong>Processing Time:</strong> AI-powered search with configurable query variations typically takes 1-3 minutes to complete.</p>
+                        <p><i class="fas fa-robot"></i> <strong>AI-Powered Search:</strong> This will use Gemini AI to generate query variations and fetch unique comments from YouTube and Reddit</p>
+                        <p><i class="fas fa-cog"></i> <strong>Configuration:</strong> You can customize the number of query variations and target comment count above</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loading" class="loading" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>Searching YouTube...</p>
+            </div>
+
+            <div id="results" class="results" style="display: none;">
+                <div class="batch-summary">
+                    <h3><i class="fas fa-chart-bar"></i> Search Results Summary</h3>
+                    <div class="summary-stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalVideos">0</div>
+                            <div class="stat-label">YouTube Videos</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalRedditPosts">0</div>
+                            <div class="stat-label">Reddit Posts</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalComments">0</div>
+                            <div class="stat-label">Total Comments</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="uniqueComments">0</div>
+                            <div class="stat-label">Unique Comments</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalReplies">0</div>
+                            <div class="stat-label">Total Replies</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="grandTotal">0</div>
+                            <div class="stat-label">Grand Total</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="queryVariations">0</div>
+                            <div class="stat-label">Query Variations</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="successfulQueries">0</div>
+                            <div class="stat-label">Successful Queries</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="failedQueries">0</div>
+                            <div class="stat-label">Failed Queries</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="latencyTime">0s</div>
+                            <div class="stat-label">Latency Time</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="batchId">-</div>
+                            <div class="stat-label">Batch ID</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="videosContainer" class="videos-container"></div>
+            </div>
+
+            <div id="error" class="error-message" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p id="errorText"></p>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script_test.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+2025-09-16 19:56:48,401 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-16 19:56:48,401 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-16 19:56:48,425 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-16 19:56:55,577 - werkzeug - WARNING -  * Debugger is active!
+2025-09-16 19:56:55,583 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-16 19:57:16,493 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:16] "GET / HTTP/1.1" 200 -
+2025-09-16 19:57:16,533 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:16] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-09-16 19:57:16,728 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:16] "[36mGET /static/js/script_test.js HTTP/1.1[0m" 304 -
+2025-09-16 19:57:16,789 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:16] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-09-16 19:57:19,599 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:19] "GET / HTTP/1.1" 200 -
+2025-09-16 19:57:19,627 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:19] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-09-16 19:57:19,637 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:19] "[36mGET /static/js/script_test.js HTTP/1.1[0m" 304 -
+2025-09-16 19:57:20,422 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:20] "GET / HTTP/1.1" 200 -
+2025-09-16 19:57:20,444 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:20] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-09-16 19:57:20,445 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:20] "[36mGET /static/js/script_test.js HTTP/1.1[0m" 304 -
+2025-09-16 19:57:20,581 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:20] "GET / HTTP/1.1" 200 -
+2025-09-16 19:57:20,610 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:20] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-09-16 19:57:20,613 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:20] "[36mGET /static/js/script_test.js HTTP/1.1[0m" 304 -
+2025-09-16 19:57:20,785 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:20] "GET / HTTP/1.1" 200 -
+2025-09-16 19:57:20,818 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:20] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-09-16 19:57:20,818 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:20] "[36mGET /static/js/script_test.js HTTP/1.1[0m" 304 -
+2025-09-16 19:57:27,688 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 19:57:27] "[33mPOST /search HTTP/1.1[0m" 404 -
+2025-09-16 19:58:02,061 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.100.135:80
+2025-09-16 19:58:02,061 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-16 20:00:52,224 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-16 20:00:52,225 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-16 20:00:52,243 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-16 20:01:02,830 - werkzeug - WARNING -  * Debugger is active!
+2025-09-16 20:01:02,837 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-16 20:01:02,901 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:01:02] "GET / HTTP/1.1" 200 -
+2025-09-16 20:01:02,922 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:01:02] "[36mGET /static/js/script_test.js HTTP/1.1[0m" 304 -
+2025-09-16 20:01:02,922 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:01:02] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-09-16 20:01:03,059 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:01:03] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-09-16 20:01:08,420 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:01:08] "[33mPOST /search HTTP/1.1[0m" 404 -
+2025-09-16 20:01:18,883 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\Youtube Scrapping_new\\copy\\youtube-scrapping-2.1\\main.py', reloading
+2025-09-16 20:01:18,885 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\Youtube Scrapping_new\\copy\\youtube-scrapping-2.1\\application.py', reloading
+2025-09-16 20:01:18,888 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\Youtube Scrapping_new\\copy\\youtube-scrapping-2.1\\run.py', reloading
+2025-09-16 20:01:18,890 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\Youtube Scrapping_new\\copy\\youtube-scrapping-2.1\\main.py', reloading
+2025-09-16 20:01:18,894 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\Youtube Scrapping_new\\copy\\youtube-scrapping-2.1\\test_app.py', reloading
+2025-09-16 20:01:18,895 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\Youtube Scrapping_new\\copy\\youtube-scrapping-2.1\\run.py', reloading
+2025-09-16 20:01:18,896 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\Youtube Scrapping_new\\copy\\youtube-scrapping-2.1\\run.py', reloading
+2025-09-16 20:01:18,897 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\Youtube Scrapping_new\\copy\\youtube-scrapping-2.1\\application.py', reloading
+2025-09-16 20:01:18,898 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\Youtube Scrapping_new\\copy\\youtube-scrapping-2.1\\test_app.py', reloading
+2025-09-16 20:01:18,906 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\Youtube Scrapping_new\\copy\\youtube-scrapping-2.1\\__init__.py', reloading
+2025-09-16 20:01:18,907 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\Youtube Scrapping_new\\copy\\youtube-scrapping-2.1\\__init__.py', reloading
+2025-09-16 20:01:20,078 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-16 20:01:30,420 - werkzeug - WARNING -  * Debugger is active!
+2025-09-16 20:01:30,424 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-16 20:01:37,882 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:01:37] "[33mPOST /search HTTP/1.1[0m" 404 -
+2025-09-16 20:04:08,398 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-16 20:04:08,398 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-16 20:04:08,419 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-16 20:04:14,741 - werkzeug - WARNING -  * Debugger is active!
+2025-09-16 20:04:14,745 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-16 20:04:25,017 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:04:25] "GET /health HTTP/1.1" 200 -
+2025-09-16 20:04:25,081 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:04:25] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-09-16 20:04:33,951 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:04:33] "[33mPOST /search HTTP/1.1[0m" 404 -
+2025-09-16 20:05:02,383 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:05:02] "GET /?id=a2731fb6-8c29-44b8-a514-cd3340f37497&vscodeBrowserReqId=1758035102057 HTTP/1.1" 200 -
+2025-09-16 20:05:02,638 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:05:02] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-09-16 20:05:02,767 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:05:02] "GET /static/js/script_test.js HTTP/1.1" 200 -
+2025-09-16 20:10:37,157 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:10:37] "[33mPOST /search HTTP/1.1[0m" 404 -
+2025-09-16 20:10:45,397 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:10:45] "GET / HTTP/1.1" 200 -
+2025-09-16 20:10:45,426 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:10:45] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-09-16 20:10:45,660 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:10:45] "GET /static/js/script_test.js HTTP/1.1" 200 -
+2025-09-16 20:15:22,312 - werkzeug - INFO - 127.0.0.1 - - [16/Sep/2025 20:15:22] "POST /api/search HTTP/1.1" 200 -
+2025-09-20 17:20:34,574 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-20 17:20:34,575 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-20 17:20:34,608 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-20 17:20:42,197 - werkzeug - WARNING -  * Debugger is active!
+2025-09-20 17:20:42,208 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-20 17:20:42,284 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:20:42] "GET / HTTP/1.1" 200 -
+2025-09-20 17:20:42,391 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:20:42] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-09-20 17:20:42,466 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:20:42] "GET /static/js/script_test.js HTTP/1.1" 200 -
+2025-09-20 17:26:19,978 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:26:19] "POST /api/search HTTP/1.1" 200 -
+2025-09-20 17:35:47,781 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-20 17:35:47,782 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-20 17:35:47,856 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-20 17:35:55,295 - werkzeug - WARNING -  * Debugger is active!
+2025-09-20 17:35:55,300 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-20 17:36:02,791 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:36:02] "GET / HTTP/1.1" 200 -
+2025-09-20 17:36:03,100 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:36:03] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-09-20 17:36:03,100 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:36:03] "[36mGET /static/js/script_test.js HTTP/1.1[0m" 304 -
+2025-09-20 17:36:04,055 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\test_quick.py', reloading
+2025-09-20 17:36:04,306 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\test_quick.py', reloading
+2025-09-20 17:36:04,306 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\test_quick.py', reloading
+2025-09-20 17:36:04,307 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\test_quick.py', reloading
+2025-09-20 17:36:05,746 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-20 17:36:12,952 - werkzeug - WARNING -  * Debugger is active!
+2025-09-20 17:36:12,956 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-20 17:36:22,266 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\services\\comment_fetcher.py', reloading
+2025-09-20 17:36:22,271 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\services\\comment_fetcher.py', reloading
+2025-09-20 17:36:24,136 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-20 17:36:31,617 - werkzeug - WARNING -  * Debugger is active!
+2025-09-20 17:36:31,617 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-20 17:37:36,131 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:37:36] "POST /api/search HTTP/1.1" 200 -
