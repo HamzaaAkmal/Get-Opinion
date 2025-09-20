@@ -101,3 +101,39 @@
 2025-09-20 17:36:31,617 - werkzeug - WARNING -  * Debugger is active!
 2025-09-20 17:36:31,617 - werkzeug - INFO -  * Debugger PIN: 997-967-999
 2025-09-20 17:37:36,131 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:37:36] "POST /api/search HTTP/1.1" 200 -
+2025-09-20 17:43:23,401 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-20 17:43:23,401 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-20 17:43:23,422 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-20 17:43:30,644 - werkzeug - WARNING -  * Debugger is active!
+2025-09-20 17:43:30,651 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-20 17:43:34,242 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:43:34] "GET / HTTP/1.1" 200 -
+2025-09-20 17:43:34,300 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:43:34] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-09-20 17:43:34,305 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:43:34] "[36mGET /static/js/script_test.js HTTP/1.1[0m" 304 -
+2025-09-20 17:45:09,024 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-20 17:45:09,025 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-20 17:45:09,053 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-20 17:45:16,622 - werkzeug - WARNING -  * Debugger is active!
+2025-09-20 17:45:16,629 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-20 17:55:58,123 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-20 17:55:58,124 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-20 17:55:58,161 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-20 17:56:06,197 - werkzeug - WARNING -  * Debugger is active!
+2025-09-20 17:56:06,204 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-20 17:56:06,281 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:56:06] "GET / HTTP/1.1" 200 -
+2025-09-20 17:56:06,332 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:56:06] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-09-20 17:56:06,332 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:56:06] "[36mGET /static/js/script_test.js HTTP/1.1[0m" 304 -
+2025-09-20 17:59:27,176 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 17:59:27] "POST /api/search HTTP/1.1" 200 -
+2025-09-20 18:06:51,442 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:06:51] "POST /api/search HTTP/1.1" 200 -
+2025-09-20 18:09:05,397 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\services\\youtube_service.py', reloading
+2025-09-20 18:09:05,400 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\services\\youtube_service.py', reloading
+2025-09-20 18:09:05,448 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\routes\\search_routes.py', reloading
+2025-09-20 18:09:05,450 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\routes\\search_routes.py', reloading
+2025-09-20 18:09:05,462 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\services\\comment_fetcher.py', reloading
+2025-09-20 18:09:05,463 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\services\\comment_fetcher.py', reloading
+2025-09-20 18:09:05,476 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\test_quick.py', reloading
+2025-09-20 18:09:10,501 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-20 18:09:21,106 - werkzeug - WARNING -  * Debugger is active!
+2025-09-20 18:09:21,113 - werkzeug - INFO -  * Debugger PIN: 997-967-999

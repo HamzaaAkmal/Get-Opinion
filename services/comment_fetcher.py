@@ -1,7 +1,7 @@
 """
 Unified comment fetcher service
 Orchestrates YouTube and Reddit comment fetching with AI-powered query generation
-Optimized for parallel processing to achieve sub-minute latency
+Optimized for parallel processing to achieve sub-minute latency with API distribution
 """
 import time
 import uuid
@@ -217,6 +217,180 @@ class UnifiedCommentFetcher:
             'attempts_made': attempt - 1
         }
     
+    def _fetch_single_query_with_dedicated_api(self, query, youtube_service, min_total_comments=None, max_retries=None):
+        """Fetch comments for a single query using a dedicated YouTube API service"""
+        if min_total_comments is None:
+            min_total_comments = self.config.TARGET_TOTAL_COMMENTS
+        if max_retries is None:
+            max_retries = 1  # Reduced for parallel processing
+        
+        print(f"=== FETCHING COMMENTS WITH DEDICATED API FOR: '{query}' ===")
+        print(f"Target: Minimum {min_total_comments} total comments (comments + replies)")
+
+        all_videos = []
+        total_comments = 0
+        total_replies = 0
+        attempt = 1
+        sources_used = []
+
+        while total_comments + total_replies < min_total_comments and attempt <= max_retries:
+            print(f"\n--- ATTEMPT {attempt}/{max_retries} ---")
+
+            results = {}
+            errors = {}
+
+            def fetch_youtube(max_videos=10, comments_per_video=80):  # Reduced for faster processing
+                try:
+                    print(f"🔍 Starting YouTube search with dedicated API #{youtube_service.current_api_index + 1}: '{query}'")
+                    
+                    videos_with_comments = youtube_service.search_and_get_comments(
+                        query, 
+                        max_videos=max_videos, 
+                        max_comments_per_video=comments_per_video
+                    )
+
+                    if not videos_with_comments:
+                        return {'error': 'No YouTube videos found'}
+
+                    total_yt_comments = sum(len(v['comments']) for v in videos_with_comments)
+                    print(f"📺 YouTube result: {len(videos_with_comments)} videos, {total_yt_comments} comments")
+
+                    return {
+                        'source': 'youtube',
+                        'videos': videos_with_comments,
+                        'total_comments': total_yt_comments
+                    }
+
+                except Exception as e:
+                    print(f"❌ YouTube fetch error: {e}")
+                    return {'error': str(e)}
+
+            def fetch_reddit(comments_limit=1500):  # Reduced for faster processing
+                try:
+                    print(f"🔍 Starting Reddit search for: '{query}'")
+                    
+                    reddit_comments = self.reddit_service.get_comments_parallel(query, comments_limit)
+
+                    # Convert Reddit comments to unified format
+                    reddit_posts = []
+                    for comment in reddit_comments:
+                        reddit_posts.append({
+                            'post_info': {
+                                'title': comment['post_title'],
+                                'subreddit': comment['subreddit'],
+                                'source': 'reddit'
+                            },
+                            'comments': [comment],
+                            'comment_count': 1,
+                            'source': 'reddit'
+                        })
+
+                    print(f"🟠 Reddit result: {len(reddit_comments)} comments")
+
+                    return {
+                        'source': 'reddit',
+                        'videos': reddit_posts,
+                        'total_comments': len(reddit_comments)
+                    }
+
+                except Exception as e:
+                    print(f"❌ Reddit fetch error: {e}")
+                    return {'error': str(e)}
+
+            # Run both fetches in parallel with reduced timeout for speed
+            with ThreadPoolExecutor(max_workers=2) as executor:
+                future_yt = executor.submit(fetch_youtube)
+                future_reddit = executor.submit(fetch_reddit)
+
+                # Get results with shorter timeout for faster processing
+                try:
+                    yt_result = future_yt.result(timeout=90)  # Reduced timeout for speed
+                    if 'error' not in yt_result:
+                        results['youtube'] = yt_result
+                        if 'youtube' not in sources_used:
+                            sources_used.append('youtube')
+                        print(f"✅ YouTube successful: {yt_result['total_comments']} comments from {len(yt_result['videos'])} videos")
+                    else:
+                        errors['youtube'] = yt_result['error']
+                        print(f"❌ YouTube failed: {yt_result['error']}")
+                except Exception as e:
+                    errors['youtube'] = str(e)
+                    print(f"❌ YouTube exception: {str(e)}")
+
+                try:
+                    reddit_result = future_reddit.result(timeout=90)  # Reduced timeout for speed
+                    if 'error' not in reddit_result:
+                        results['reddit'] = reddit_result
+                        if 'reddit' not in sources_used:
+                            sources_used.append('reddit')
+                        print(f"✅ Reddit successful: {reddit_result['total_comments']} comments")
+                    else:
+                        errors['reddit'] = reddit_result['error']
+                        print(f"❌ Reddit failed: {reddit_result['error']}")
+                except Exception as e:
+                    errors['reddit'] = str(e)
+                    print(f"❌ Reddit exception: {str(e)}")
+
+            # Add new results to accumulated data
+            attempt_videos = []
+            attempt_comments = 0
+            attempt_replies = 0
+
+            if 'youtube' in results:
+                attempt_videos.extend(results['youtube']['videos'])
+                attempt_comments += results['youtube']['total_comments']
+
+            if 'reddit' in results:
+                attempt_videos.extend(results['reddit']['videos'])
+                attempt_comments += results['reddit']['total_comments']
+
+            # Calculate replies in this attempt
+            for video in attempt_videos:
+                for comment in video['comments']:
+                    attempt_replies += len(comment.get('replies', []))
+
+            # Add to totals
+            all_videos.extend(attempt_videos)
+            total_comments += attempt_comments
+            total_replies += attempt_replies
+
+            current_total = total_comments + total_replies
+            print(f"📊 Attempt {attempt} results:")
+            print(f"   Comments collected: {attempt_comments}")
+            print(f"   Replies collected: {attempt_replies}")
+            print(f"   Total so far: {current_total}")
+            print(f"   Target: {min_total_comments}")
+
+            # Check if we've reached the target or got reasonable data
+            if current_total >= min_total_comments or (current_total > 0 and attempt >= max_retries):
+                print(f"✅ Stopping: Total: {current_total}")
+                break
+            elif attempt < max_retries:
+                print(f"⚠️  Target not reached. Starting attempt {attempt + 1}...")
+                time.sleep(1)  # Shorter pause for parallel processing
+            else:
+                print(f"❌ Maximum retries reached. Final total: {current_total}")
+
+            attempt += 1
+
+        print(f"\n🎯 FINAL RESULTS:")
+        print(f"   Total comments: {total_comments}")
+        print(f"   Total replies: {total_replies}")
+        print(f"   Grand total: {total_comments + total_replies}")
+        print(f"   Sources used: {sources_used}")
+        print(f"   Attempts made: {attempt - 1}")
+
+        return {
+            'videos': all_videos,
+            'total_comments': total_comments,
+            'total_replies': total_replies,
+            'grand_total': total_comments + total_replies,
+            'sources': sources_used,
+            'errors': errors,
+            'target_achieved': (total_comments + total_replies) >= min_total_comments,
+            'attempts_made': attempt - 1
+        }
+    
     def fetch_multiple_queries_aggregated(self, queries, target_total_comments=None):
         """Fetch comments for multiple queries in parallel and aggregate unique results"""
         if target_total_comments is None:
@@ -243,11 +417,16 @@ class UnifiedCommentFetcher:
             print(f"� Starting parallel processing for Query {i}/{len(queries)}: '{query}'")
             
             try:
-                # Fetch comments for this specific query
-                query_result = self.fetch_all_comments_parallel(
+                # Create dedicated YouTube service for this query to distribute API load
+                from services.youtube_service import YouTubeService
+                dedicated_youtube_service = YouTubeService.create_service_for_query(i-1, len(queries))
+                
+                # Fetch comments for this specific query with dedicated API
+                query_result = self._fetch_single_query_with_dedicated_api(
                     query=query,
-                    min_total_comments=max(1000, target_total_comments // len(queries)),  # Further reduced for faster completion
-                    max_retries=1  # Reduced retries for speed
+                    youtube_service=dedicated_youtube_service,
+                    min_total_comments=max(1000, target_total_comments // len(queries)),
+                    max_retries=1
                 )
 
                 # Consider query successful if we got ANY data (videos or comments)

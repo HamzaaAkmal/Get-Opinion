@@ -13,7 +13,7 @@ import random
 class YouTubeService:
     """Service for YouTube API operations and comment fetching with API rotation"""
     
-    def __init__(self):
+    def __init__(self, assigned_api_index=None):
         self.config = Config()
         
         # Parse API keys from environment (comma-separated)
@@ -29,8 +29,14 @@ class YouTubeService:
         
         print(f"🔑 Loaded {len(self.api_keys)} YouTube API keys")
         
-        # Initialize API rotation
-        self.current_api_index = 0
+        # Initialize API rotation with assigned index if provided
+        self.assigned_api_index = assigned_api_index
+        if assigned_api_index is not None:
+            self.current_api_index = assigned_api_index % len(self.api_keys)
+            print(f"🎯 Using assigned API key #{self.current_api_index + 1}")
+        else:
+            self.current_api_index = 0
+            
         self.api_usage_count = {}  # Track usage per API
         self.rate_limited_apis = set()  # Track rate-limited APIs
         
@@ -40,6 +46,13 @@ class YouTubeService:
         
         # Create initial YouTube client
         self.youtube = self._build_youtube_client()
+    
+    @classmethod
+    def create_service_for_query(cls, query_index, total_queries):
+        """Create a YouTube service instance assigned to a specific API for load balancing"""
+        # Distribute queries across available APIs
+        assigned_api = query_index % 4  # We have 4 API keys
+        return cls(assigned_api_index=assigned_api)
     
     def _build_youtube_client(self):
         """Build YouTube API client with current API key"""
