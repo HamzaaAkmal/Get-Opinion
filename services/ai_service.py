@@ -22,8 +22,8 @@ class AIService:
         """Check if AI service is available"""
         return self.model is not None
     
-    def generate_query_variations(self, original_query, num_variations=None):
-        """Generate multiple variations of a query using Gemini AI"""
+    def generate_query_variations(self, original_query, num_variations=None, custom_prompt=None):
+        """Generate multiple variations of a query using Gemini AI with optional custom prompt"""
         if not self.is_available():
             print("❌ AI service not available - returning original query only")
             return [original_query]
@@ -34,20 +34,25 @@ class AIService:
         try:
             print(f"🤖 Generating {num_variations} query variations using Gemini AI...")
 
-            prompt = f"""
-            Generate {num_variations} different variations of this search query: "{original_query}"
+            if custom_prompt:
+                # Use custom prompt for specialized query generation (like emergency queries)
+                prompt = custom_prompt
+            else:
+                # Use standard prompt
+                prompt = f"""
+                Generate {num_variations} different variations of this search query: "{original_query}"
 
-            Requirements:
-            - Each variation should have different wording and style
-            - Keep the core meaning the same but vary the phrasing
-            - Make them suitable for YouTube and Reddit search
-            - Include different perspectives, synonyms, and rephrasings
-            - Some should be more formal, some more casual
-            - Some should be questions, some statements
-            - Return only the variations as a numbered list, one per line
-            - Do not include any explanations or additional text
+                Requirements:
+                - Each variation should have different wording and style
+                - Keep the core meaning the same but vary the phrasing
+                - Make them suitable for YouTube and Reddit search
+                - Include different perspectives, synonyms, and rephrasings
+                - Some should be more formal, some more casual
+                - Some should be questions, some statements
+                - Return only the variations as a numbered list, one per line
+                - Do not include any explanations or additional text
 
-            Example format:
+                Example format:
             1. First variation here
             2. Second variation here
             ...

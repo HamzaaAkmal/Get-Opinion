@@ -6,12 +6,14 @@ Optimized for parallel processing to achieve sub-minute latency with API distrib
 import time
 import uuid
 from datetime import datetime
+from typing import List, Dict, Any
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from config import Config
 from services.ai_service import ai_service
 from services.youtube_service import youtube_service
 from services.reddit_service import reddit_service
 from services.database import db_service
+from services.smart_goal_manager import smart_goal_manager
 from utils.file_utils import save_to_json_file, sanitize_filename
 
 
@@ -24,6 +26,7 @@ class UnifiedCommentFetcher:
         self.youtube_service = youtube_service
         self.reddit_service = reddit_service
         self.db_service = db_service
+        self.smart_goal_manager = smart_goal_manager
     
     def fetch_all_comments_parallel(self, query, min_total_comments=None, max_retries=None):
         """Fetch comments from both YouTube and Reddit in parallel with retry logic"""
@@ -87,15 +90,29 @@ class UnifiedCommentFetcher:
                     # Reduce comment limit for faster processing
                     reddit_limit = comments_limit + (attempt - 1) * 500
 
+                    # Validate Reddit service is available
+                    if not hasattr(self, 'reddit_service') or self.reddit_service is None:
+                        raise Exception("Reddit service not initialized")
+
                     reddit_comments = self.reddit_service.get_comments_parallel(query, reddit_limit)
+
+                    # Validate the response
+                    if reddit_comments is None:
+                        raise Exception("Reddit service returned None")
+                    
+                    if not isinstance(reddit_comments, list):
+                        raise Exception(f"Reddit service returned invalid type: {type(reddit_comments)}")
 
                     # Convert Reddit comments to unified format
                     reddit_posts = []
                     for comment in reddit_comments:
+                        if not isinstance(comment, dict):
+                            continue  # Skip invalid comments
+                        
                         reddit_posts.append({
                             'post_info': {
-                                'title': comment['post_title'],
-                                'subreddit': comment['subreddit'],
+                                'title': comment.get('post_title', 'Unknown Post'),
+                                'subreddit': comment.get('subreddit', 'unknown'),
                                 'source': 'reddit'
                             },
                             'comments': [comment],
@@ -112,8 +129,9 @@ class UnifiedCommentFetcher:
                     }
 
                 except Exception as e:
-                    print(f"❌ Reddit fetch error: {e}")
-                    return {'error': str(e)}
+                    error_msg = f"Reddit fetch failed: {str(e) if e and str(e).strip() else 'Unknown error'}"
+                    print(f"❌ {error_msg}")
+                    return {'error': error_msg}
 
             # Run both fetches in parallel with reduced timeout for speed
             with ThreadPoolExecutor(max_workers=2) as executor:
@@ -146,8 +164,12 @@ class UnifiedCommentFetcher:
                         errors['reddit'] = reddit_result['error']
                         print(f"❌ Reddit failed: {reddit_result['error']}")
                 except Exception as e:
-                    errors['reddit'] = str(e)
-                    print(f"❌ Reddit exception: {str(e)}")
+                    error_msg = str(e) if e and str(e).strip() else "Unknown Reddit error"
+                    errors['reddit'] = error_msg
+                    print(f"❌ Reddit exception: {error_msg}")
+                    # Add debugging information
+                    import traceback
+                    print(f"🐛 Reddit error traceback:\n{traceback.format_exc()}")
 
             # Add new results to accumulated data
             attempt_videos = []
@@ -269,15 +291,29 @@ class UnifiedCommentFetcher:
                 try:
                     print(f"🔍 Starting Reddit search for: '{query}'")
                     
+                    # Validate Reddit service is available
+                    if not hasattr(self, 'reddit_service') or self.reddit_service is None:
+                        raise Exception("Reddit service not initialized")
+                    
                     reddit_comments = self.reddit_service.get_comments_parallel(query, comments_limit)
+
+                    # Validate the response
+                    if reddit_comments is None:
+                        raise Exception("Reddit service returned None")
+                    
+                    if not isinstance(reddit_comments, list):
+                        raise Exception(f"Reddit service returned invalid type: {type(reddit_comments)}")
 
                     # Convert Reddit comments to unified format
                     reddit_posts = []
                     for comment in reddit_comments:
+                        if not isinstance(comment, dict):
+                            continue  # Skip invalid comments
+                            
                         reddit_posts.append({
                             'post_info': {
-                                'title': comment['post_title'],
-                                'subreddit': comment['subreddit'],
+                                'title': comment.get('post_title', 'Unknown Post'),
+                                'subreddit': comment.get('subreddit', 'unknown'),
                                 'source': 'reddit'
                             },
                             'comments': [comment],
@@ -294,8 +330,9 @@ class UnifiedCommentFetcher:
                     }
 
                 except Exception as e:
-                    print(f"❌ Reddit fetch error: {e}")
-                    return {'error': str(e)}
+                    error_msg = f"Reddit fetch failed: {str(e) if e and str(e).strip() else 'Unknown error'}"
+                    print(f"❌ {error_msg}")
+                    return {'error': error_msg}
 
             # Run both fetches in parallel with reduced timeout for speed
             with ThreadPoolExecutor(max_workers=2) as executor:
@@ -328,8 +365,12 @@ class UnifiedCommentFetcher:
                         errors['reddit'] = reddit_result['error']
                         print(f"❌ Reddit failed: {reddit_result['error']}")
                 except Exception as e:
-                    errors['reddit'] = str(e)
-                    print(f"❌ Reddit exception: {str(e)}")
+                    error_msg = str(e) if e and str(e).strip() else "Unknown Reddit error"
+                    errors['reddit'] = error_msg
+                    print(f"❌ Reddit exception: {error_msg}")
+                    # Add debugging information
+                    import traceback
+                    print(f"🐛 Reddit error details:\n{traceback.format_exc()}")
 
             # Add new results to accumulated data
             attempt_videos = []
@@ -392,14 +433,19 @@ class UnifiedCommentFetcher:
         }
     
     def fetch_multiple_queries_aggregated(self, queries, target_total_comments=None):
-        """Fetch comments for multiple queries in parallel and aggregate unique results"""
+        """Fetch comments for multiple queries in parallel and aggregate unique results with smart goal management"""
         if target_total_comments is None:
             target_total_comments = self.config.TARGET_TOTAL_COMMENTS
         
-        print(f"🚀 STARTING PARALLEL MULTI-QUERY AGGREGATION")
+        print(f"🚀 STARTING SMART GOAL-ORIENTED MULTI-QUERY AGGREGATION")
         print(f"📋 Total queries to process: {len(queries)}")
         print(f"🎯 Target unique comments: {target_total_comments}")
+        print(f"🧠 Smart Goal Management: ENABLED")
         print(f"⚡ Processing queries in parallel for maximum speed!")
+        
+        # Get smart configuration based on target
+        smart_config = self.smart_goal_manager.get_smart_dashboard_config(target_total_comments)
+        print(f"🎯 Smart Configuration: {smart_config['processing_mode']} mode, estimated time: {smart_config['estimated_time']}")
 
         all_unique_comments = {}
         all_videos_data = []
@@ -474,7 +520,7 @@ class UnifiedCommentFetcher:
                 for i, query in enumerate(queries)
             }
             
-            # Collect results as they complete
+            # Collect results as they complete with smart goal tracking
             for future in as_completed(future_to_query):
                 query_info = future_to_query[future]
                 try:
@@ -509,15 +555,28 @@ class UnifiedCommentFetcher:
 
                         successful_queries += 1
                         current_unique_total = len(all_unique_comments)
-
+                        queries_completed = successful_queries + failed_queries
+                        
+                        # 🧠 SMART GOAL ANALYSIS
+                        source_stats = self._analyze_source_performance(query_results)
+                        goal_analysis = self.smart_goal_manager.analyze_goal_status(
+                            target_total_comments, current_unique_total, queries_completed, len(queries), source_stats
+                        )
+                        
                         print(f"✅ Processed query: {result['query'][:50]}...")
                         print(f"   📊 Comments: {result['total_comments']}, Replies: {result['total_replies']}")
                         print(f"   🆕 New unique added: {new_unique_count}")
                         print(f"   📈 Global unique total: {current_unique_total}")
+                        print(f"   🧠 Goal Progress: {goal_analysis['current_progress']:.1f}% ({goal_analysis['goal_status']})")
+                        
+                        # Show smart recommendations if needed
+                        if goal_analysis['recommendations']:
+                            print(f"   💡 Smart Recommendations: {'; '.join(goal_analysis['recommendations'][:2])}")
 
                         # Check if we've reached the target
                         if current_unique_total >= target_total_comments:
                             print(f"🎉 TARGET REACHED! {current_unique_total} unique comments collected")
+                            print(f"🧠 Goal Status: {goal_analysis['goal_status']} - Mission Accomplished!")
                             # Note: We don't break here because parallel processing is already running
                     else:
                         failed_queries += 1
@@ -534,6 +593,47 @@ class UnifiedCommentFetcher:
         # Calculate timing
         end_time = time.time()
         processing_time = end_time - start_time
+
+        # 🧠 SMART GOAL COMPLETION ANALYSIS
+        final_unique_comments = list(all_unique_comments.values())
+        final_unique_count = len(final_unique_comments)
+        
+        # Check if target was achieved and if not, provide smart insights
+        target_achieved = final_unique_count >= target_total_comments
+        if not target_achieved:
+            deficit = target_total_comments - final_unique_count
+            completion_percentage = (final_unique_count / target_total_comments) * 100
+            
+            print(f"\n🧠 SMART GOAL ANALYSIS:")
+            print(f"   🎯 Target: {target_total_comments}")
+            print(f"   ✅ Achieved: {final_unique_count}")
+            print(f"   📉 Deficit: {deficit} comments")
+            print(f"   📊 Completion: {completion_percentage:.1f}%")
+            
+            # Generate smart recommendations for next time
+            source_stats = self._analyze_source_performance(query_results)
+            goal_analysis = self.smart_goal_manager.analyze_goal_status(
+                target_total_comments, final_unique_count, len(queries), len(queries), source_stats
+            )
+            
+            if goal_analysis['recommendations']:
+                print(f"   💡 Smart Recommendations for next run:")
+                for rec in goal_analysis['recommendations'][:3]:
+                    print(f"      • {rec}")
+            
+            # Suggest emergency queries for immediate follow-up
+            if deficit > 1000:  # Only for significant deficits
+                successful_patterns = [r['query'] for r in query_results if r['status'] == 'success' and r['total_comments'] > 300]
+                emergency_queries = self.smart_goal_manager.generate_emergency_queries(
+                    queries[0] if queries else "general search", deficit, successful_patterns
+                )
+                print(f"   🚨 Emergency Query Suggestions (deficit > 1000):")
+                for i, eq in enumerate(emergency_queries[:5], 1):
+                    print(f"      {i}. {eq}")
+        else:
+            print(f"\n🎉 SMART GOAL STATUS: TARGET ACHIEVED!")
+            print(f"   🎯 Target: {target_total_comments} ✅")
+            print(f"   🏆 Final Result: {final_unique_count} ({((final_unique_count / target_total_comments) * 100):.1f}%)")
 
         # Final results
         final_unique_comments = list(all_unique_comments.values())
@@ -615,6 +715,26 @@ class UnifiedCommentFetcher:
                         total_replies += 1
 
         return list(unique_comments.values()), total_comments, total_replies
+    
+    def _analyze_source_performance(self, query_results: List[Dict]) -> Dict[str, Dict]:
+        """Analyze performance of different sources for smart decision making"""
+        source_stats = {'youtube': {'total_comments': 0, 'queries': 0}, 'reddit': {'total_comments': 0, 'queries': 0}}
+        
+        for result in query_results:
+            if result['status'] == 'success':
+                for source in result.get('sources', []):
+                    if source in source_stats:
+                        source_stats[source]['total_comments'] += result['total_comments']
+                        source_stats[source]['queries'] += 1
+        
+        # Calculate averages
+        for source in source_stats:
+            if source_stats[source]['queries'] > 0:
+                source_stats[source]['avg_comments'] = source_stats[source]['total_comments'] / source_stats[source]['queries']
+            else:
+                source_stats[source]['avg_comments'] = 0
+        
+        return source_stats
     
     def save_unified_data(self, query, videos_data, unique_comments, unique_count, total_replies, total_comments, sources):
         """Save unified data from both YouTube and Reddit"""

@@ -137,3 +137,34 @@
 2025-09-20 18:09:10,501 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
 2025-09-20 18:09:21,106 - werkzeug - WARNING -  * Debugger is active!
 2025-09-20 18:09:21,113 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-20 18:27:26,990 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-20 18:27:26,991 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-20 18:27:27,019 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-09-20 18:27:34,248 - werkzeug - WARNING -  * Debugger is active!
+2025-09-20 18:27:34,261 - werkzeug - INFO -  * Debugger PIN: 997-967-999
+2025-09-20 18:27:34,465 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:34] "GET / HTTP/1.1" 200 -
+2025-09-20 18:27:34,597 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:34] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-09-20 18:27:34,640 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:34] "GET /static/js/script_test.js HTTP/1.1" 200 -
+2025-09-20 18:27:34,851 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:34] "[33mPOST /smart-config HTTP/1.1[0m" 404 -
+2025-09-20 18:27:54,496 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:54] "[33mPOST /smart-config HTTP/1.1[0m" 404 -
+2025-09-20 18:27:55,003 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:55] "[33mPOST /smart-config HTTP/1.1[0m" 404 -
+2025-09-20 18:27:55,035 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:55] "[33mPOST /smart-config HTTP/1.1[0m" 404 -
+2025-09-20 18:27:55,064 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:55] "[33mPOST /smart-config HTTP/1.1[0m" 404 -
+2025-09-20 18:27:56,333 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:56] "[33mPOST /smart-config HTTP/1.1[0m" 404 -
+2025-09-20 18:27:57,047 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:57] "[33mPOST /smart-config HTTP/1.1[0m" 404 -
+2025-09-20 18:27:57,213 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:57] "[33mPOST /smart-config HTTP/1.1[0m" 404 -
+2025-09-20 18:27:57,382 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:57] "[33mPOST /smart-config HTTP/1.1[0m" 404 -
+2025-09-20 18:27:59,923 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:27:59] "[33mPOST /smart-config HTTP/1.1[0m" 404 -
+2025-09-20 18:35:30,147 - werkzeug - INFO - 127.0.0.1 - - [20/Sep/2025 18:35:30] "POST /api/search HTTP/1.1" 200 -
+2025-09-20 18:40:17,334 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\routes\\search_routes.py', reloading
+2025-09-20 18:40:17,377 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\routes\\search_routes.py', reloading
+2025-09-20 18:40:17,379 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\services\\comment_fetcher.py', reloading
+2025-09-20 18:40:17,382 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\services\\smart_goal_manager.py', reloading
+2025-09-20 18:40:17,384 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\routes\\search_routes.py', reloading
+2025-09-20 18:40:17,387 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\services\\ai_service.py', reloading
+2025-09-20 18:40:17,388 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\test_smart_goal.py', reloading
+2025-09-20 18:40:17,390 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\services\\smart_goal_manager.py', reloading
+2025-09-20 18:40:17,391 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\services\\comment_fetcher.py', reloading
+2025-09-20 18:40:17,392 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\services\\ai_service.py', reloading
+2025-09-20 18:40:17,393 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Hamza\\Desktop\\One Prompt YT\\ytpriv\\test_smart_goal.py', reloading

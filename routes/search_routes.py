@@ -1,20 +1,42 @@
 """
 Main search routes for the YouTube Scrapping API
-Handles search requests and AI-powered query generation
+Handles search requests and AI-powered query generation with Smart Goal Management
 """
 import time
 from flask import Blueprint, request, jsonify
 from services.ai_service import ai_service
 from services.comment_fetcher import comment_fetcher
+from services.smart_goal_manager import smart_goal_manager
 from utils.helpers import validate_query, format_duration, get_current_timestamp
 
 search_bp = Blueprint('search', __name__)
 
 
+@search_bp.route('/smart-config', methods=['POST'])
+def get_smart_config():
+    """Get smart configuration recommendations based on target"""
+    try:
+        data = request.get_json()
+        target_comments = data.get('target_comments', 5000)
+        
+        # Get smart configuration from the goal manager
+        smart_config = smart_goal_manager.get_smart_dashboard_config(target_comments)
+        
+        return jsonify({
+            'success': True,
+            'config': smart_config,
+            'target_comments': target_comments
+        })
+        
+    except Exception as e:
+        print(f"❌ Error getting smart config: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
 @search_bp.route('/search', methods=['POST'])
 def search():
-    """Main AI-powered multi-query search endpoint"""
-    print("=== AI-POWERED MULTI-QUERY SEARCH ENDPOINT CALLED ===")
+    """Main AI-powered multi-query search endpoint with Smart Goal Management"""
+    print("=== AI-POWERED SMART GOAL-ORIENTED SEARCH ENDPOINT CALLED ===")
     
     try:
         data = request.get_json()
@@ -30,13 +52,22 @@ def search():
             return jsonify({'error': validation_message}), 400
 
         print("🤖 Generating query variations with Gemini AI...")
+        print("🧠 Smart Goal Management: ENABLED")
         start_time = time.time()
 
-        # Generate query variations using AI
+        # Get configuration with smart goal management
         num_variations = data.get('num_variations', 20)
-        target_comments = data.get('target_comments', 50000)
+        target_comments = data.get('target_comments', 5000)
         
-        print(f"🎯 Configuration: {num_variations} query variations, target: {target_comments:,} comments")
+        # Apply smart configuration recommendations
+        smart_config = smart_goal_manager.get_smart_dashboard_config(target_comments)
+        if smart_config['query_variations'] != num_variations:
+            print(f"🧠 Smart adjustment: Query variations {num_variations} → {smart_config['query_variations']}")
+            num_variations = smart_config['query_variations']
+        
+        print(f"🎯 Smart Configuration: {num_variations} query variations, target: {target_comments:,} comments")
+        print(f"📊 Processing Mode: {smart_config['processing_mode']}")
+        print(f"⏱️  Estimated Time: {smart_config['estimated_time']}")
         
         query_variations = ai_service.generate_query_variations(
             original_query, 
